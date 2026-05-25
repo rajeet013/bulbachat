@@ -1,0 +1,11 @@
+name: "bulbachat"
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "bulbachat"
+    ports:
+      - 5430:5432
+    restart: always
