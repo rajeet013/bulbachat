@@ -1,7 +1,7 @@
 "use client"
 import { useChat } from "@ai-sdk/react";
 import { useGetChatById } from "@/modules/chat/hooks/chat";
-import { Fragment, useState, useMemo } from "react";
+import { Fragment, useState, useMemo, useEffect, useRef } from "react";
 
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
 import { Message, MessageContent } from "@/components/ai-elements/message";
@@ -12,6 +12,7 @@ import { useAIModels } from "@/modules/ai-agent/hook/ai-agent";
 import { PromptInput, PromptInputBody, PromptInputButton, PromptInputSubmit, PromptInputTextarea, PromptInputTools } from "@/components/ai-elements/prompt-input";
 import { RotateCcwIcon, StopCircleIcon } from "lucide-react";
 import { Reasoning, ReasoningContent, ReasoningTrigger } from "@/components/ai-elements/reasoning";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface MessagePart {
     type: string;
@@ -33,6 +34,11 @@ const MessageWithForm = ({ chatId }: { chatId: string }) => {
 
     const [selectedModel, setSelectedModel] = useState<string>(data?.data?.model ?? "");
     const [input, setInput] = useState("");
+
+    const hasAutoTriggered = useRef(false);
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const shouldAutoTrigger = searchParams.get("autoTrigger") === "true";
 
     const initialMessages = useMemo(() => {
         if (!data?.data?.messages) return [];
@@ -59,11 +65,52 @@ const MessageWithForm = ({ chatId }: { chatId: string }) => {
             });
     }, [data]);
 
-    const { stop, messages, status, sendMessage, regenerate } = useChat({
-        fetch: async (input, init) => {
-            return fetch("/api/chat", init);
-        }
+    const { stop, messages, status, sendMessage, regenerate } = useChat({ 
+      api: "/api/chat"
     });
+
+    useEffect(()=>{
+      if(data?.data?.model && !selectedModel){
+        setSelectedModel(data.data.model)
+      }
+    }, [data, selectedModel])
+
+    useEffect(()=>{
+      if (hasAutoTriggered.current) return;
+      if (!shouldAutoTrigger) return;
+      if (hasChatBeenTriggered(chatId)) return;
+      if (!selectedModel) return;
+      if (initialMessages.length === 0) return;
+
+      const lastMessage = initialMessages[initialMessages.length - 1];
+
+      if(lastMessage.role !== "user") return;
+
+      hasAutoTriggered.current = true;
+      markChatAsTriggered(chatId)
+
+        sendMessage(
+          { text: null },
+          {
+            body: {
+              model: selectedModel,
+              chatId,
+              skipUserMessage: true,
+            }
+          }
+        );
+
+        router.replace(`/chat/${chatId}`, {scroll:false})
+    }, [
+      shouldAutoTrigger,
+      chatId,
+      selectedModel,
+      initialMessages,
+      markChatAsTriggered,
+      hasChatBeenTriggered,
+      sendMessage,
+      router,
+    ])
 
 
     if (isPending) {
