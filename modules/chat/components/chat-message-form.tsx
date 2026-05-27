@@ -80,15 +80,15 @@ const ChatMessageForm = ({ initialMessage, onMessageChange }: ChatMessageFormPro
                         )}
 
                         <Button
-    type="submit"
-    disabled={message.trim() === "" || isCreating}
-    size="sm"
-    variant={message.trim() ? "default" : "ghost"}
-    className="h-8 w-8 p-0 rounded-full"
->
-    {isCreating ? <Spinner /> : <Send className="h-4 w-4" />}
-    <span className="sr-only">Send message</span>
-</Button>
+                            type="submit"
+                            disabled={message.trim() === "" || isCreating}
+                            size="sm"
+                            variant={message.trim() ? "default" : "ghost"}
+                            className="h-8 w-8 p-0 rounded-full"
+                        >
+                            {isCreating ? <Spinner /> : <Send className="h-4 w-4" />}
+                            <span className="sr-only">Send message</span>
+                        </Button>
                     </div>
                 </div>
             </form>
