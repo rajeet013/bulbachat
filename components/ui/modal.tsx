@@ -72,7 +72,7 @@ const Modal = ({
             {onSubmit && (
               <Button
                 variant={submitVariant}
-                className='bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl'
+                className='rounded-xl'
                 onClick={handleSubmit}
               >
                 {submitText}

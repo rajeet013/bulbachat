@@ -132,7 +132,7 @@ const ChatSidebar = ({ user, chats = [] }: ChatSidebarProps) => {
                             <DropdownMenuSeparator />
 
                             <DropdownMenuItem
-                                className="flex flex-row gap-2 cursor-pointer"
+                                className="flex flex-row gap-2 cursor-pointer rounded-xl"
                                 onClick={(e) => onDelete(e, chat.id)}
                             >
                                 <Trash className="h-4 w-4 text-red-500" />
