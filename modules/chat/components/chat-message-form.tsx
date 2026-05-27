@@ -8,6 +8,8 @@ import React from 'react'
 import { useAIModels } from '@/modules/ai-agent/hook/ai-agent'
 import { Spinner } from '@/components/ui/spinner'
 import { ModelSelector } from './model-selector'
+import { useCreateChat } from '../hooks/chat'
+import { toast } from 'sonner'
 
 interface ChatMessageFormProps {
     initialMessage?: string;
@@ -17,9 +19,9 @@ interface ChatMessageFormProps {
 const ChatMessageForm = ({ initialMessage, onMessageChange }: ChatMessageFormProps) => {
 
     const { data: models, isPending } = useAIModels();
-    console.log(models)
     const [selectedModelId, setSelectedModelId] = useState<string>(models?.models[0]?.id ?? "");
     const [message, setMessage] = useState("");
+    const { mutate: createChat, isPending: isCreating } = useCreateChat();
 
     useEffect(() => {
         if (initialMessage) {
@@ -29,13 +31,22 @@ const ChatMessageForm = ({ initialMessage, onMessageChange }: ChatMessageFormPro
     }, [initialMessage, onMessageChange])
 
     const handleSubmit = async (e: React.FormEvent) => {
-        try {
-            e.preventDefault();
-            console.log("Message sent")
-        } catch (error) {
-            console.log(error)
+    e.preventDefault();
+    if (!message.trim()) return;
+    
+    createChat(
+        { content: message, model: selectedModelId },
+        {
+            onSuccess: (res) => {
+                if (res.success) {
+                    toast.success("Message sent successfully");
+                    setMessage("");
+                    onMessageChange("");
+                }
+            }
         }
-    }
+    );
+}
 
     return (
         <div className="w-full max-w-3xl mx-auto px-4 pb-6">
@@ -69,15 +80,15 @@ const ChatMessageForm = ({ initialMessage, onMessageChange }: ChatMessageFormPro
                         )}
 
                         <Button
-                            type="submit"
-                            disabled={message.trim() === ""}
-                            size="sm"
-                            variant={message.trim() ? "default" : "ghost"}
-                            className="h-8 w-8 p-0 rounded-full"
-                        >
-                            <Send className="h-4 w-4" />
-                            <span className="sr-only">Send message</span>
-                        </Button>
+    type="submit"
+    disabled={message.trim() === "" || isCreating}
+    size="sm"
+    variant={message.trim() ? "default" : "ghost"}
+    className="h-8 w-8 p-0 rounded-full"
+>
+    {isCreating ? <Spinner /> : <Send className="h-4 w-4" />}
+    <span className="sr-only">Send message</span>
+</Button>
                     </div>
                 </div>
             </form>

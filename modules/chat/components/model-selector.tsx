@@ -90,24 +90,16 @@ export function ModelSelector({
     return (
         <>
             <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger>
-                    <Button
-                        variant="ghost"
-                        role="combobox"
-                        aria-expanded={open}
-                        className={cn(
-                            "h-8 justify-between gap-2 px-2 text-xs hover:bg-accent",
-                            className
-                        )}
-                    >
-                        <div className="flex items-center gap-1.5 min-w-0">
-                            <Sparkles className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                            <span className="truncate font-medium">
-                                {selectedModel?.name || "Select Model"}
-                            </span>
-                        </div>
-                    </Button>
-                </PopoverTrigger>
+                <PopoverTrigger className="cursor-pointer">
+    <div className={cn("h-8 flex items-center justify-between gap-2 px-2 text-xs hover:bg-accent rounded-md", className)}>
+        <div className="flex items-center gap-1.5 min-w-0">
+            <Sparkles className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+            <span className="truncate font-medium">
+                {selectedModel?.name || "Select Model"}
+            </span>
+        </div>
+    </div>
+</PopoverTrigger>
 
                 <PopoverContent className={"w-3xl p-0"} align="start">
                     <div className="p-3 border-b relative">
