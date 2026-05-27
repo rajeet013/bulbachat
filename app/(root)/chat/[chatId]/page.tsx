@@ -8,14 +8,15 @@ interface PageProps {
   }>;
 }
 
-const page = async ({params}: PageProps) => {
-    const {chatId} = await params;
-  return (
-    <>
-        <ActiveChatLoader chatId={chatId} />
-        <MessageWithForm chatId={chatId} />
-    </>
-  )
+const page = async ({ params }: PageProps) => {
+    const { chatId } = await params;
+
+    return (
+        <>
+            <ActiveChatLoader chatId={chatId} />
+            <MessageWithForm chatId={chatId} />
+        </>
+    )
 }
 
 export default page
