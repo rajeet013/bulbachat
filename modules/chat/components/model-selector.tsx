@@ -91,15 +91,15 @@ export function ModelSelector({
         <>
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger className="cursor-pointer">
-    <div className={cn("h-8 flex items-center justify-between gap-2 px-2 text-xs hover:bg-accent rounded-md", className)}>
-        <div className="flex items-center gap-1.5 min-w-0">
-            <Sparkles className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-            <span className="truncate font-medium">
-                {selectedModel?.name || "Select Model"}
-            </span>
-        </div>
-    </div>
-</PopoverTrigger>
+                    <div className={cn("h-8 flex items-center justify-between gap-2 px-2 text-xs hover:bg-accent rounded-md", className)}>
+                        <div className="flex items-center gap-1.5 min-w-0">
+                            <Sparkles className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                            <span className="truncate font-medium">
+                                {selectedModel?.name || "Select Model"}
+                            </span>
+                        </div>
+                    </div>
+                </PopoverTrigger>
 
                 <PopoverContent className={"w-3xl p-0"} align="start">
                     <div className="p-3 border-b relative">
@@ -170,133 +170,133 @@ export function ModelSelector({
             </Popover>
 
              <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
-    <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
-        <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5" />
-                {selectedForDetails?.name}
-            </DialogTitle>
-            <DialogDescription>Detailed information about this AI model</DialogDescription>
-        </DialogHeader>
-        <ScrollArea className="pr-4 h-100">
-            {selectedForDetails && (
-                <div className="space-y-6">
-                    {/* Description */}
-                    <div>
-                        <h3 className="text-sm font-semibold mb-2">Description</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{selectedForDetails.description}</p>
-                    </div>
-
-                    <Separator />
-
-                    {/* Context & Capabilities */}
-                    <div>
-                        <h3 className="text-sm font-semibold mb-3">Context & Capabilities</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-1">
-                                <p className="text-xs text-muted-foreground">Context Length</p>
-                                <p className="text-sm font-medium">
-                                    {formatContextLength(selectedForDetails.context_length ?? 0)} tokens
-                                </p>
-                            </div>
-                            <div className="space-y-1">
-                                <p className="text-xs text-muted-foreground">Max Completion Tokens</p>
-                                <p className="text-sm font-medium">
-                                    {formatContextLength(selectedForDetails.top_provider?.max_completion_tokens ?? 0)} tokens
-                                </p>
-                            </div>
-                            <div className="space-y-1">
-                                <p className="text-xs text-muted-foreground">Modality</p>
-                                <p className="text-sm font-medium capitalize">
-                                    {selectedForDetails.architecture?.modality?.replace("->", " → ")}
-                                </p>
-                            </div>
-                            <div className="space-y-1">
-                                <p className="text-xs text-muted-foreground">Tokenizer</p>
-                                <p className="text-sm font-medium">{selectedForDetails.architecture?.tokenizer}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <Separator />
-
-                    {/* Input/Output Modalities */}
-                    <div>
-                        <h3 className="text-sm font-semibold mb-3">Supported Modalities</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <p className="text-xs text-muted-foreground">Input Modalities</p>
-                                <div className="flex flex-wrap gap-1">
-                                    {selectedForDetails.architecture?.input_modalities?.map((modality) => (
-                                        <Badge key={modality} variant="outline" className="text-xs">
-                                            {modality}
-                                        </Badge>
-                                    ))}
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <Sparkles className="h-5 w-5" />
+                            {selectedForDetails?.name}
+                        </DialogTitle>
+                        <DialogDescription>Detailed information about this AI model</DialogDescription>
+                    </DialogHeader>
+                    <ScrollArea className="pr-4 h-100">
+                        {selectedForDetails && (
+                            <div className="space-y-6">
+                                {/* Description */}
+                                <div>
+                                    <h3 className="text-sm font-semibold mb-2">Description</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">{selectedForDetails.description}</p>
                                 </div>
-                            </div>
-                            <div className="space-y-2">
-                                <p className="text-xs text-muted-foreground">Output Modalities</p>
-                                <div className="flex flex-wrap gap-1">
-                                    {selectedForDetails.architecture?.output_modalities?.map((modality) => (
-                                        <Badge key={modality} variant="outline" className="text-xs">
-                                            {modality}
-                                        </Badge>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <Separator />
+                                <Separator />
 
-                    {/* Pricing */}
-                    <div>
-                        <h3 className="text-sm font-semibold mb-3">Pricing</h3>
-                        {isFreeModel(selectedForDetails) ? (
-                            <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                                <Badge variant="secondary" className="bg-green-500/20">FREE</Badge>
-                                <p className="text-sm text-muted-foreground">This model is completely free to use</p>
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-2 gap-3">
-                                {Object.entries(selectedForDetails.pricing).map(([key, value]) => {
-                                    if (value === "0") return null;
-                                    return (
-                                        <div key={key} className="space-y-1">
-                                            <p className="text-xs text-muted-foreground capitalize">{key.replace("_", " ")}</p>
-                                            <p className="text-sm font-medium">${value}</p>
+                                {/* Context & Capabilities */}
+                                <div>
+                                    <h3 className="text-sm font-semibold mb-3">Context & Capabilities</h3>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-1">
+                                            <p className="text-xs text-muted-foreground">Context Length</p>
+                                            <p className="text-sm font-medium">
+                                                {formatContextLength(selectedForDetails.context_length ?? 0)} tokens
+                                            </p>
                                         </div>
-                                    );
-                                })}
+                                        <div className="space-y-1">
+                                            <p className="text-xs text-muted-foreground">Max Completion Tokens</p>
+                                            <p className="text-sm font-medium">
+                                                {formatContextLength(selectedForDetails.top_provider?.max_completion_tokens ?? 0)} tokens
+                                            </p>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="text-xs text-muted-foreground">Modality</p>
+                                            <p className="text-sm font-medium capitalize">
+                                                {selectedForDetails.architecture?.modality?.replace("->", " → ")}
+                                            </p>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="text-xs text-muted-foreground">Tokenizer</p>
+                                            <p className="text-sm font-medium">{selectedForDetails.architecture?.tokenizer}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <Separator />
+
+                                {/* Input/Output Modalities */}
+                                <div>
+                                    <h3 className="text-sm font-semibold mb-3">Supported Modalities</h3>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <p className="text-xs text-muted-foreground">Input Modalities</p>
+                                            <div className="flex flex-wrap gap-1">
+                                                {selectedForDetails.architecture?.input_modalities?.map((modality) => (
+                                                    <Badge key={modality} variant="outline" className="text-xs">
+                                                        {modality}
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-xs text-muted-foreground">Output Modalities</p>
+                                            <div className="flex flex-wrap gap-1">
+                                                {selectedForDetails.architecture?.output_modalities?.map((modality) => (
+                                                    <Badge key={modality} variant="outline" className="text-xs">
+                                                        {modality}
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <Separator />
+
+                                {/* Pricing */}
+                                <div>
+                                    <h3 className="text-sm font-semibold mb-3">Pricing</h3>
+                                    {isFreeModel(selectedForDetails) ? (
+                                        <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                                            <Badge variant="secondary" className="bg-green-500/20">FREE</Badge>
+                                            <p className="text-sm text-muted-foreground">This model is completely free to use</p>
+                                        </div>
+                                    ) : (
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {Object.entries(selectedForDetails.pricing).map(([key, value]) => {
+                                                if (value === "0") return null;
+                                                return (
+                                                    <div key={key} className="space-y-1">
+                                                        <p className="text-xs text-muted-foreground capitalize">{key.replace("_", " ")}</p>
+                                                        <p className="text-sm font-medium">${value}</p>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <Separator />
+
+                                {/* Provider Info */}
+                                <div>
+                                    <h3 className="text-sm font-semibold mb-3">Provider Information</h3>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm text-muted-foreground">Content Moderation</span>
+                                            <Badge variant={selectedForDetails.top_provider?.is_moderated ? "default" : "secondary"}>
+                                                {selectedForDetails.top_provider?.is_moderated ? "Enabled" : "Disabled"}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Model ID */}
+                                <div>
+                                    <h3 className="text-sm font-semibold mb-2">Model ID</h3>
+                                    <code className="text-xs bg-muted px-2 py-1 rounded block break-all">{selectedForDetails.id}</code>
+                                </div>
                             </div>
                         )}
-                    </div>
-
-                    <Separator />
-
-                    {/* Provider Info */}
-                    <div>
-                        <h3 className="text-sm font-semibold mb-3">Provider Information</h3>
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm text-muted-foreground">Content Moderation</span>
-                                <Badge variant={selectedForDetails.top_provider?.is_moderated ? "default" : "secondary"}>
-                                    {selectedForDetails.top_provider?.is_moderated ? "Enabled" : "Disabled"}
-                                </Badge>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Model ID */}
-                    <div>
-                        <h3 className="text-sm font-semibold mb-2">Model ID</h3>
-                        <code className="text-xs bg-muted px-2 py-1 rounded block break-all">{selectedForDetails.id}</code>
-                    </div>
-                </div>
-            )}
-        </ScrollArea>
-    </DialogContent>
-</Dialog>
+                    </ScrollArea>
+                </DialogContent>
+            </Dialog>
         </>
     );
 }
