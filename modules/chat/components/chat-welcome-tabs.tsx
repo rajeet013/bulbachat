@@ -56,7 +56,7 @@ const ChatWelcomeTabs = ({ username, onMessageSelect }: ChatWelcomeTabsProps) =>
     <div className="flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-3xl space-y-8">
             <h1 className="text-3xl font-semibold">
-                How can I help you, {username ? username.split(" ")[0] : "there"}?
+                Are you single? No worries BulbaChat got your back {username ? username.split(" ")[0] : "there"}
             </h1>
 
             <div className="flex flex-wrap gap-2 w-full">

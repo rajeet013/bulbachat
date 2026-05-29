@@ -49,7 +49,7 @@ const ChatMessageForm = ({ initialMessage, onMessageChange }: ChatMessageFormPro
 }
 
     return (
-        <div className="w-full max-w-3xl mx-auto px-4 pb-6">
+        <div className="w-full max-w-4xl px-4 pb-4">
             <form onSubmit={handleSubmit}>
                 <div className="relative rounded-2xl border-border shadow-sm transition-all">
                     <Textarea
@@ -58,7 +58,7 @@ const ChatMessageForm = ({ initialMessage, onMessageChange }: ChatMessageFormPro
                             setMessage(e.target.value);
                         }}
                         placeholder="Type your message here..."
-                        className="min-h-15 max-h-50 resize-none border-0 bg-accent px-4 py-3 text-base focus-visible:ring-0 focus-visible:ring-offset-0 rounded-lg"
+                        className="min-h-15 max-h-50 resize-none border-0 bg-accent px-4 py-3 text-base focus-visible:ring-0 focus-visible:ring-offset-0 rounded-md"
                         onKeyDown={(e) => {
                             if (e.key === "Enter" && !e.shiftKey) {
                                 e.preventDefault();
