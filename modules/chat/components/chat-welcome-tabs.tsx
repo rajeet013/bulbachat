@@ -1,8 +1,18 @@
 import React, { useState } from 'react'
-import { Code, GraduationCap, Newspaper, Sparkles } from 'lucide-react'
+import { Code, GraduationCap, Leaf, Newspaper, Sparkles } from 'lucide-react'
 import { Separator } from '@/components/ui/separator';
 
 const CHAT_TAB_MESSAGE = [
+    {
+        tabName: "Queries",
+        icon: <Leaf className="h-4 w-4" />,
+        messages: [
+            "Tell me about yourself",
+            "What are type advantages and disadvantages in Pokémon battles?",
+            "How do I build a balanced Pokémon team for VGC?",
+            "What are the best starter Pokémon and why?"
+        ],
+    },
     {
         tabName: "Create",
         icon: <Sparkles className="h-4 w-4" />,
