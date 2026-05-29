@@ -119,7 +119,7 @@ const MessageWithForm = ({ chatId }: { chatId: string }) => {
         );
     }
 
-    const handleSubmit = () => {
+    const submitMessage = () => {
         if (!input.trim()) return;
 
         sendMessage(
@@ -133,6 +133,11 @@ const MessageWithForm = ({ chatId }: { chatId: string }) => {
         );
 
         setInput("");
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        submitMessage();
     };
 
     const handleRetry = () => {
@@ -195,9 +200,10 @@ const MessageWithForm = ({ chatId }: { chatId: string }) => {
                         key={`${message.id}-${i}`}
                     >
                         <ReasoningTrigger />
-                        <ReasoningContent className="mt-2 italic font-light text-muted-foreground">
-                            <span>{part.text}</span>
-                        </ReasoningContent>
+                        <ReasoningContent
+                            className="mt-2 italic font-light text-muted-foreground"
+                            children={part.text ?? ""}
+                        />
                     </Reasoning>
                 );
 
@@ -245,7 +251,7 @@ const MessageWithForm = ({ chatId }: { chatId: string }) => {
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter" && !e.shiftKey) {
                                         e.preventDefault();
-                                        handleSubmit(e as any);
+                                        submitMessage();
                                     }
                                 }}
                             />
