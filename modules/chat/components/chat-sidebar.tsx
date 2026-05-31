@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-import { PlusIcon, SearchIcon, EllipsisIcon, Trash } from "lucide-react"
+import { PlusIcon, SearchIcon, EllipsisIcon, Trash, XIcon } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from '@/components/ui/dropdown-menu'
 import React from 'react'
 import UserButton from '@/modules/authentication/components/user-button'
@@ -30,9 +30,12 @@ interface Chat {
 interface ChatSidebarProps {
     user: User;
     chats?: Chat[];
+    onClose?: () => void;
 }
 
-const ChatSidebar = ({ user, chats = [] }: ChatSidebarProps) => {
+
+
+const ChatSidebar = ({ user, chats = [], onClose }: ChatSidebarProps) => {
     const { activeChatId } = useChatStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedChatID, setSelectedChatID] = useState<string | null>(null);
@@ -154,13 +157,19 @@ const ChatSidebar = ({ user, chats = [] }: ChatSidebarProps) => {
     return (
         <div className="flex h-full w-64 flex-col border-r border-border bg-sidebar">
             <div className="flex items-center justify-between border-b border-sidebar-border px-4 py-3">
-                <div className="flex items-center gap-2">
-                    <div className="flex flex-col items-center">
-                        <Image src="/bulbasaur.png" alt="bulbasaur" width={100} height={100} />
-                        <p className="text-[#468D53] text-xl">BulbaChat</p>
-                    </div>
+                <div className="flex flex-col items-center">
+                    <Image src="/bulbasaur.png" alt="bulbasaur" width={100} height={100} />
+                    <p className="text-[#468D53] text-xl">BulbaChat</p>
                 </div>
-            </div>
+                {onClose && (
+                    <button
+                        className="md:hidden p-1 rounded-lg hover:bg-muted"
+                        onClick={onClose}
+                    >
+                        <XIcon size={18} />
+                    </button>
+                    )}
+                </div>
             <div className="p-4">
                 <Link href={"/"}>
                     <Button className={"w-full rounded-xl"}>
