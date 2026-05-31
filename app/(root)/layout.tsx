@@ -1,7 +1,6 @@
 import { auth } from '@/lib/auth'
 import { currentUser } from '@/modules/authentication/actions'
-import { getAllChats } from '@/modules/chat/actions'
-import ChatSidebar from '@/modules/chat/components/chat-sidebar'
+import ChatSidebarWrapper from '@/modules/chat/components/chat_sidebar_wrapper'
 import Header from '@/modules/chat/components/header'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -9,7 +8,7 @@ import React from 'react'
 import db from '@/lib/db'
 
 type Props = {
-  children: React.ReactNode
+    children: React.ReactNode
 }
 
 const layout = async ({ children }: Props) => {
@@ -31,8 +30,8 @@ const layout = async ({ children }: Props) => {
 
     return (
         <div className="flex h-screen overflow-hidden">
-            <ChatSidebar user={user} chats={chats} />
-            <main className="flex-1 overflow-hidden">
+            <ChatSidebarWrapper user={user} chats={chats} />
+            <main className="flex-1 overflow-hidden min-w-0">
                 <Header />
                 {children}
             </main>
