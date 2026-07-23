@@ -19,7 +19,7 @@ export const currentUser = async()=> {
                 id:session.user.id
             },
             select:{
-                id: true,
+                id: false,
                 email: true,
                 name: true,
                 image: true,
