@@ -22,15 +22,4 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This is my personal friendly NextJs chatbot project that I created as a recreational activity, by following a video tutorial where someone created a t3 clone chatbot mainly using NextJs, JavaScript, Better Auth and Openrouter API for models, where I not only just followed the video I also implemented TypeScript. I had to face a lot of challenges and errors when integrating TypeScript into this project. I took this challenge to learn to adapt to TypeScript instead of relying on JavaScript for improved readability and maintainability and smooth error detection
